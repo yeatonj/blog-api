@@ -21,6 +21,11 @@ blogRouter.post('/:blogId/comment', (req, res) => {
   return res.send(`CREATING COMMENT FOR POST ${req.params.blogId}, TBI`);
 });
 
+blogRouter.put('/comment/:commentId', (req, res) => {
+    // !! TBI
+  return res.send(`EDITING COMMENT ${req.params.commentId}, TBI`);
+});
+
 blogRouter.post('/', (req, res) => {
     // !! TBI
   return res.send(`CREATING NEW POST, TBI`);
