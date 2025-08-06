@@ -2,11 +2,11 @@ const { PrismaClient } = require('../generated/prisma');
 
 const prisma = new PrismaClient();
 
-async function createUser() {
+async function getUser() {
     
 }
 
 
 module.exports = {
-    createUser
+    getUser
 }

@@ -30,11 +30,21 @@ async function getPost() {
 
 }
 
+async function getPostComments() {
+
+}
+
+async function editComment() {
+
+}
+
 module.exports = {
     getAllPosts,
     getAllPublishedPosts,
     createPost,
     deletePost,
     editPost,
-    getPost
+    getPost,
+    getPostComments,
+    editComment
 }
