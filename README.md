@@ -1,0 +1,1 @@
+This is a project to demonstrate a REST API. The backend provides the API, while the two frontends allow viewing the blog and editing the blog, respectively.
