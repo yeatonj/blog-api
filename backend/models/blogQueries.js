@@ -2,11 +2,11 @@ const { PrismaClient } = require('../generated/prisma');
 
 const prisma = new PrismaClient();
 
-async function allPosts() {
+async function getAllPosts() {
     return await prisma.blogPost.findMany();
 }
 
-async function allPublishedPosts() {
+async function getAllPublishedPosts() {
     return await prisma.blogPost.findMany({
         where: {
             published: true,
@@ -14,7 +14,27 @@ async function allPublishedPosts() {
     });
 }
 
+async function createPost() {
+
+}
+
+async function deletePost() {
+
+}
+
+async function editPost() {
+
+}
+
+async function getPost() {
+
+}
+
 module.exports = {
-    allPosts,
-    allPublishedPosts
+    getAllPosts,
+    getAllPublishedPosts,
+    createPost,
+    deletePost,
+    editPost,
+    getPost
 }
