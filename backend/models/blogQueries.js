@@ -57,6 +57,29 @@ async function getPost(id) {
     return post;
 }
 
+async function createComment(blogId, userId, content) {
+    await prisma.comment.create({
+        data: {
+            blogId: blogId,
+            userId: userId,
+            content: content
+        }
+    });
+}
+
+async function getCommentOwner(id) {
+    const comment = prisma.comment.findFirst({
+        where: {
+            id: id,
+        },
+    });
+    if (!comment) {
+        return null;
+    } else {
+        return comment.userId;
+    }
+}
+
 async function editComment(id, content, published) {
     await prisma.comment.update({
         where: {
@@ -76,5 +99,7 @@ module.exports = {
     deletePost,
     editPost,
     getPost,
+    createComment,
+    getCommentOwner,
     editComment
 }
