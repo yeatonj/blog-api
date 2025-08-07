@@ -1,1 +1,0 @@
-This is the frontend that we use to do all editing on the blog (via the REST API).
