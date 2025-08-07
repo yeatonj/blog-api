@@ -12,10 +12,21 @@ const { getAllPosts,
   editComment 
 } = require('../models/blogQueries');
 
-blogRouter.get('/', (req, res) => {
-    // !! TBI
-  return res.send(`GETTING ALL BLOG POSTS, TBI`);
+blogRouter.get('/', async (req, res) => {
+    let posts;
+    try {
+      posts = await getAllPublishedPosts();
+      return res.json(posts);
+    } catch (err) {
+      console.log(err);
+      return res.status(501).end('Server Error');
+    }  
 });
+
+blogRouter.get('/all', (req, res) => {
+  // !! TBI
+  return res.send(`GETTING ALL BLOG POSTS INCLUDING UNPUBLISHED, TBI`);
+})
 
 blogRouter.get('/:blogId', (req, res) => {
     // !! TBI
@@ -41,7 +52,6 @@ blogRouter.post('/',
   passport.authenticate('jwt', { session: false }), 
   async (req, res) => {
     if (!req.user.admin) {
-      console.log('non-admin!!!')
       return res.status(403).end('Forbidden');
     }
     // We know we have the ability to post, so go for it
