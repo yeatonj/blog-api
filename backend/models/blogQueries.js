@@ -14,28 +14,59 @@ async function getAllPublishedPosts() {
     });
 }
 
-async function createPost() {
-
+async function createPost(authorId, title, content) {
+    await prisma.blogPost.create({
+        data: {
+            authorId: authorId,
+            title: title,
+            content: content
+        },
+    });
 }
 
-async function deletePost() {
-
+async function deletePost(id) {
+    await prisma.blogPost.delete({
+        where: {
+            id: id,
+        },
+    });
 }
 
-async function editPost() {
-
+async function editPost(id, authorId, title, content) {
+    await prisma.blogPost.update({
+        where: {
+            id: id,
+        },
+        data: {
+            authorId: authorId,
+            title: title,
+            content: content
+        },
+    })
 }
 
-async function getPost() {
-
+async function getPost(id) {
+    const post = await prisma.blogPost.findFirst({
+        where: {
+            id: id,
+        },
+        include: {
+            comments: true,
+        }
+    });
+    return post;
 }
 
-async function getPostComments() {
-
-}
-
-async function editComment() {
-
+async function editComment(id, content, published) {
+    await prisma.comment.update({
+        where: {
+            id: id,
+        },
+        data: {
+            content: content,
+            published: published
+        }
+    });
 }
 
 module.exports = {
@@ -45,6 +76,5 @@ module.exports = {
     deletePost,
     editPost,
     getPost,
-    getPostComments,
     editComment
 }
