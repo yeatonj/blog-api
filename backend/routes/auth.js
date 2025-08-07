@@ -16,7 +16,7 @@ authRouter.post('/login',
       admin: req.user.admin
     }
     // Create token and return to the user
-    jwt.sign({user: user}, 'secretkey', { expiresIn: '1h' }, (err, token) => {
+    jwt.sign({user: user}, process.env.SECRET, { expiresIn: '1h' }, (err, token) => {
         res.json({
             token: token,
         });
