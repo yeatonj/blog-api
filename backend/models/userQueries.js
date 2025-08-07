@@ -13,9 +13,11 @@ async function createUser(username, first, last, password) {
                 password: password
             },
         });
+        return true;
     }
     catch (err) {
-        return err;
+        console.log(err);
+        return false;
     }
 }
 
