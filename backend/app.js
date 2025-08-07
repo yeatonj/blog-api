@@ -10,9 +10,10 @@ app.use(express.urlencoded({ extended: true }));
 // Use .env file
 require('dotenv').config();
 
-// Setup passport for login
+// Setup passport for login and tokens
 const passport = require("passport");
 require('./auth/passportLocal');
+require('./auth/passportJWT');
 
 // Load routes
 const routes = require('./routes/index');
