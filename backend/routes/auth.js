@@ -27,11 +27,6 @@ authRouter.post('/login',
   }
 );
 
-authRouter.post('/validate', (req, res) => {
-    // !! TBI
-  res.send(`ATTEMPTING TO VALIDATE, TBI`);
-});
-
 
 
 module.exports = {authRouter};
