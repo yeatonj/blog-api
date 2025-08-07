@@ -1,6 +1,16 @@
 const { Router } = require("express");
 const blogRouter = Router();
 const passport = require('passport');
+const { getAllPosts,
+  getAllPublishedPosts,
+  createPost,
+  deletePost,
+  editPost,
+  getPost,
+  createComment,
+  getCommentOwner,
+  editComment 
+} = require('../models/blogQueries');
 
 blogRouter.get('/', (req, res) => {
     // !! TBI
@@ -29,10 +39,18 @@ blogRouter.put('/comment/:commentId', (req, res) => {
 
 blogRouter.post('/', 
   passport.authenticate('jwt', { session: false }), 
-  (req, res) => {
-    // !! TBI
-    console.log(req.user);
-  return res.send(`CREATING NEW POST, TBI`);
+  async (req, res) => {
+    if (!req.user.admin) {
+      console.log('non-admin!!!')
+      return res.status(403).end('Forbidden');
+    }
+    // We know we have the ability to post, so go for it
+    try {
+      await createPost(req.user.id, req.body.title, req.body.content);
+    } catch (err) {
+      return res.status(501).end('Server Error');
+    }
+  return res.send(`Post successfully created.`);
 });
 
 blogRouter.put('/:blogId', (req, res) => {
