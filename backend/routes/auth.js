@@ -1,19 +1,29 @@
 const { Router } = require("express");
 const authRouter = Router();
+const passport = require('passport');
 
-authRouter.post('/login', (req, res) => {
-    // !! TBI
-  return res.send(`ATTEMPTING TO LOGIN, TBI`);
-});
+authRouter.post('/login', 
+  passport.authenticate("local", {
+    failWithError: true,
+    session:false
+  }),
+  function (req, res) {
+    res.send('SUCCESSFULLY LOGGED IN');
+  },
+  // Unauthorized error handler
+  function(err, req, res, next) {
+    res.sendStatus(401);
+  }
+);
 
 authRouter.post('/validate', (req, res) => {
     // !! TBI
-  return res.send(`ATTEMPTING TO VALIDATE, TBI`);
+  res.send(`ATTEMPTING TO VALIDATE, TBI`);
 });
 
 authRouter.post('/logout', (req, res) => {
     // !! TBI
-  return res.send(`ATTEMPTING TO LOGOUT, TBI`);
+  res.send(`ATTEMPTING TO LOGOUT, TBI`);
 });
 
 

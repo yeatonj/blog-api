@@ -1,12 +1,20 @@
 const express = require('express');
 
+// Setup app
 const app = express();
 
+// App will serve JSON
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Use .env file
 require('dotenv').config();
 
+// Setup passport for login
+const passport = require("passport");
+require('./auth/passportLocal');
+
+// Load routes
 const routes = require('./routes/index');
 
 const port = process.env.PORT || 3000;
