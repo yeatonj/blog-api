@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const blogRouter = Router();
+const passport = require('passport');
 
 blogRouter.get('/', (req, res) => {
     // !! TBI
@@ -26,8 +27,11 @@ blogRouter.put('/comment/:commentId', (req, res) => {
   return res.send(`EDITING COMMENT ${req.params.commentId}, TBI`);
 });
 
-blogRouter.post('/', (req, res) => {
+blogRouter.post('/', 
+  passport.authenticate('jwt', { session: false }), 
+  (req, res) => {
     // !! TBI
+    console.log(req.user);
   return res.send(`CREATING NEW POST, TBI`);
 });
 

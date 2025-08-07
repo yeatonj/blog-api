@@ -13,7 +13,6 @@ authRouter.post('/login',
     const user = {
       id: req.user.id,
       username: req.user.username,
-      admin: req.user.admin
     }
     // Create token and return to the user
     jwt.sign({user: user}, process.env.SECRET, { expiresIn: '1h' }, (err, token) => {
