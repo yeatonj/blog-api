@@ -40,27 +40,35 @@ blogRouter.get('/all',
 })
 
 blogRouter.get('/:blogId', 
-  async (req, res, next) => {
+  async (req, res) => {
+    // Deny non-admins
+    if (!req.user.admin) {
+      return res.status(403).end('Forbidden');
+    }
     let post;
     try {
       post = await getPost(parseInt(req.params.blogId));
-      req.currentPost = post;
-      // Check if published. If not, we'll need to authenticate
+      // Check if published. If not, post not found.
       if (!post.published) {
-        passport.authenticate('jwt', { session: false });
+        return res.status(501).end('Post not found');
       }
-      next();
+      return res.json(post);
     } catch (err) {
       return res.status(501).end('Post not found');
     }
-  },
-  (req, res) => {
-    // Make sure we are an admin if this is not published
-    if (!req.currentPost.published && (!req.user || !req.user.admin)) {
-      return res.status(401).end('Post does not exist');
+  }
+);
+
+blogRouter.get('/protected/:blogId',
+  passport.authenticate('jwt', { session: false }),
+  async (req, res) => {
+    let post;
+    try {
+      post = await getPost(parseInt(req.params.blogId));
+      return res.json(post);
+    } catch (err) {
+      return res.status(501).end('Post not found');
     }
-    // Now we know we can return post data
-    return res.json(req.currentPost);
   }
 );
 
