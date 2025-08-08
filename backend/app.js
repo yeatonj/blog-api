@@ -3,6 +3,8 @@ const express = require('express');
 // Setup app
 const app = express();
 
+var cors = require('cors');
+
 // App will serve JSON
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -20,7 +22,7 @@ const routes = require('./routes/index');
 
 const port = process.env.PORT || 3000;
 
-// app.use(cors());
+app.use(cors());
 
 app.use('/auth', routes.authRouter);
 app.use('/user', routes.userRouter);
