@@ -1,6 +1,10 @@
 import { useState } from "react";
 
-export default function LoginForm() {
+export default function LoginForm({
+    tokenSetter,
+    loggedInSetter,
+    isAdminSetter
+}) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     async function login(event) {
@@ -19,12 +23,25 @@ export default function LoginForm() {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-            console.log(response)
             const data = await response.json();
-            console.log(data);
-            alert(data);
+            // Set localstorage
+            localStorage.setItem('loggedIn', 'true');
+            localStorage.setItem('admin', String(data.admin));
+            localStorage.setItem('token', data.token);
+            // Set in application also
+            loggedInSetter(true);
+            isAdminSetter(data.admin);
+            tokenSetter(data.token);
+            // console.log(data);
         } catch (err) {
             // !! Probably want something here to update the fact that we're not actually logged in
+            localStorage.removeItem('loggedIn');
+            localStorage.removeItem('admin');
+            localStorage.removeItem('token');
+            // Set in application also
+            loggedInSetter(false);
+            isAdminSetter(false);
+            tokenSetter(null);
             console.error('Issue with login:', err);
         }
     }
