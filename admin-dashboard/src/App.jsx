@@ -3,9 +3,9 @@ import { useState } from 'react';
 
 import LoginForm from './components/LoginForm'
 import LogoutButton from './components/LogoutButton';
+import Dashboard from './components/Dashboard';
 
 function App() {
-
   const [token, setToken] = useState(() => {
     const initialToken = localStorage.getItem('token');
     return initialToken ? initialToken : null;
@@ -20,6 +20,15 @@ function App() {
     const initialAdmin = localStorage.getItem('admin');
     return initialAdmin ? initialAdmin : false;
   });
+
+  function deauthenticate() {
+    setToken(null);
+    setLoggedIn(false);
+    setIsAdmin(false);
+    localStorage.removeItem('loggedIn');
+    localStorage.removeItem('admin');
+    localStorage.removeItem('token');
+  }
 
   if (!loggedIn) {
     return (
@@ -46,7 +55,11 @@ function App() {
   } else {
     return (
       <>
-        <p>You have access, congratulations!</p>
+        <Dashboard 
+          token={token}
+          deauthHandler={deauthenticate}
+        />
+        <p>To logout, click here:</p>
         <LogoutButton 
           tokenSetter={setToken}
           loggedInSetter={setLoggedIn}
