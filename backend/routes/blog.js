@@ -41,10 +41,6 @@ blogRouter.get('/all',
 
 blogRouter.get('/:blogId', 
   async (req, res) => {
-    // Deny non-admins
-    if (!req.user.admin) {
-      return res.status(403).end('Forbidden');
-    }
     let post;
     try {
       post = await getPost(parseInt(req.params.blogId));
@@ -62,6 +58,10 @@ blogRouter.get('/:blogId',
 blogRouter.get('/protected/:blogId',
   passport.authenticate('jwt', { session: false }),
   async (req, res) => {
+    // Deny non-admins
+    if (!req.user.admin) {
+      return res.status(403).end('Forbidden');
+    }
     let post;
     try {
       post = await getPost(parseInt(req.params.blogId));
