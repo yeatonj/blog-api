@@ -30,7 +30,8 @@ export default function BlogDetail({
                 });
                 const data = await response.json();
                 setPostDetails(data);
-                console.log(data);
+                setPostBody(data.content);
+                setPostTitle(data.title);
             } catch (err) {
                 console.log(err);
                 deauthHandler();
@@ -48,10 +49,25 @@ export default function BlogDetail({
     }
 
     return (
-        <>
+        <div>
             <p>This is the detail of a blog!</p>
+            <form>
+                <label>Post Title:</label>
+                <input 
+                    type="text" 
+                    value={postTitle}
+                    onChange={(e) => setPostTitle(e.target.value)}
+                />
+                <label>Post Text:</label>
+                <textarea 
+                    cols="100" 
+                    rows="10"
+                    value={postBody}
+                    onChange={(e) => setPostBody(e.target.value)}
+                ></textarea>
+            </form>
             <button onClick={setSummary}>Return to Summary</button>
-        </>
+        </div>
         
     )
 }
