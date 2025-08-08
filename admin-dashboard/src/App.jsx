@@ -20,16 +20,34 @@ function App() {
     return initialAdmin ? initialAdmin : false;
   });
 
-
-  return (
-    <>
-      <LoginForm 
-        tokenSetter={setToken}
-        loggedInSetter={setLoggedIn}
-        isAdminSetter={setIsAdmin}
-      />
-    </>
-  )
+  if (!loggedIn) {
+    return (
+      <>
+        <LoginForm 
+          tokenSetter={setToken}
+          loggedInSetter={setLoggedIn}
+          isAdminSetter={setIsAdmin}
+          message={'Please login to access posts.'}
+        />
+      </>
+    )
+  } else if (!isAdmin) {
+    return (
+      <>
+        <LoginForm 
+          tokenSetter={setToken}
+          loggedInSetter={setLoggedIn}
+          isAdminSetter={setIsAdmin}
+          message={'Not validated as admin user. Login as admin to access posts.'}
+        />
+      </>
+    )
+  } else {
+    return (
+      <p>You have access, congratulations!</p>
+    )
+  }
+  
 }
 
 export default App

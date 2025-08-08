@@ -3,7 +3,8 @@ import { useState } from "react";
 export default function LoginForm({
     tokenSetter,
     loggedInSetter,
-    isAdminSetter
+    isAdminSetter,
+    message
 }) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -47,22 +48,25 @@ export default function LoginForm({
     }
 
     return (
-        <form onSubmit={login}>
-            <label>Username</label>
-            <input 
-                placeholder="username@example.com" 
-                type="email" 
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-            />
-            <label>Password</label>
-            <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+        <>
+            <p>{message}</p>
+            <form onSubmit={login}>
+                <label>Username</label>
+                <input 
+                    placeholder="username@example.com" 
+                    type="email" 
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                />
+                <label>Password</label>
+                <input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
 
-            />
-            <button type="submit">Log In</button>
-        </form>
+                />
+                <button type="submit">Log In</button>
+            </form>
+        </>
     )
 }
