@@ -18,6 +18,7 @@ authRouter.post('/login',
     jwt.sign({user: user}, process.env.SECRET, { expiresIn: '1h' }, (err, token) => {
         res.json({
             token: token,
+            admin: req.user.admin,
         });
     });
   },
