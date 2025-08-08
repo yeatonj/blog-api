@@ -22,7 +22,7 @@ export default function BlogDetail({
         const fetchPosts = async () => {
                 try {
                     console.log(serverPrefix + 'blog/' + blogId)
-                const response =  await fetch(serverPrefix + 'blog/' + blogId, {
+                const response =  await fetch(serverPrefix + 'blog/protected/' + blogId, {
                     method: 'GET',
                     headers: {
                         'Authorization': 'Bearer ' + token,
