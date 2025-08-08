@@ -1,7 +1,8 @@
 import './App.css'
+import { useState } from 'react';
 
 import LoginForm from './components/LoginForm'
-import { useState } from 'react';
+import LogoutButton from './components/LogoutButton';
 
 function App() {
 
@@ -44,7 +45,14 @@ function App() {
     )
   } else {
     return (
-      <p>You have access, congratulations!</p>
+      <>
+        <p>You have access, congratulations!</p>
+        <LogoutButton 
+          tokenSetter={setToken}
+          loggedInSetter={setLoggedIn}
+          isAdminSetter={setIsAdmin}
+        />
+      </>
     )
   }
   
