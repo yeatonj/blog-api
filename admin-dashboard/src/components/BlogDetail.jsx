@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 
+import CommentDetails from "./CommentDetails";
+
 export default function BlogDetail({
     serverPrefix,
     token,
@@ -11,6 +13,11 @@ export default function BlogDetail({
     function setSummary() {
         detailIdSetter(0);
         summarySetter(true);
+    }
+
+    function deauth() {
+        setSummary();
+        deauthHandler();
     }
 
     const [postDetails, setPostDetails] = useState(null);
@@ -41,8 +48,7 @@ export default function BlogDetail({
             setSummary();
             console.log(data);
         } catch (err) {
-            setSummary()
-            deauthHandler();
+            deauth();
             console.error('Issue with posting. logging out:', err);
         }
     }
@@ -68,16 +74,16 @@ export default function BlogDetail({
             setSummary();
             console.log(data);
         } catch (err) {
-            // setSummary();
-            deauthHandler();
+            deauth();
             console.error('Issue with deleting. logging out:', err);
         }
     }
 
     // Grab the blog data to display
     useEffect(() => {
+        let active = true;
         const fetchPosts = async () => {
-                try {
+            try {
                 const response =  await fetch(serverPrefix + 'blog/protected/' + blogId, {
                     method: 'GET',
                     headers: {
@@ -85,10 +91,12 @@ export default function BlogDetail({
                     },
                 });
                 const data = await response.json();
-                setPostDetails(data);
-                setPostBody(data.content);
-                setPostTitle(data.title);
-                setIsPublished(data.published)
+                if (active) {
+                    setPostDetails(data);
+                    setPostBody(data.content);
+                    setPostTitle(data.title);
+                    setIsPublished(data.published)
+                }
             } catch (err) {
                 console.log(err);
                 deauthHandler();
@@ -97,6 +105,11 @@ export default function BlogDetail({
 
         
         fetchPosts();
+
+        return () => {
+            active = false;
+        }
+
     }, [deauthHandler, token, serverPrefix, blogId]);
 
     if (postDetails === null) {
@@ -135,6 +148,14 @@ export default function BlogDetail({
                 <button onClick={updatePost}>Update Post</button>
             </form>
             <button onClick={deletePost}>Delete Post</button>
+            <h2>Comments</h2>
+            <CommentDetails 
+                comments={postDetails.comments}
+                serverPrefix={serverPrefix}
+                token={token}
+                deauthHandler={deauth}
+                blogId={blogId}
+            />
             <button onClick={setSummary}>Return to Summary</button>
         </div>
         

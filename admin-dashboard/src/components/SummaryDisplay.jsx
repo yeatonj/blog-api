@@ -11,6 +11,7 @@ export default function SummaryDisplay({
     const [blogContents, setBlogContents] = useState(null);  
     // Grab the blog data to display
     useEffect(() => {
+        let active = true;
         const fetchPosts = async () => {
                 try {
                 const response =  await fetch(serverPrefix + 'blog/all', {
@@ -20,7 +21,9 @@ export default function SummaryDisplay({
                     },
                 });
                 const data = await response.json();
-                setBlogContents(data);
+                if (active) {
+                    setBlogContents(data);
+                }
             } catch (err) {
                 console.log(err);
                 deauthHandler();
@@ -28,6 +31,10 @@ export default function SummaryDisplay({
         }
         
         fetchPosts();
+
+        return () => {
+            active = false;
+        }
     }, [deauthHandler, token, serverPrefix]);
 
     if (blogContents === null) {
