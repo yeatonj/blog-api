@@ -81,7 +81,7 @@ blogRouter.post('/:blogId/comment',
     } catch (err) {
       return res.status(501).end('Server Error');
     }
-    return res.send(`Comment successfully created`);
+    return res.json(`Comment successfully created`);
 });
 
 blogRouter.put('/comment/:commentId', 
@@ -101,7 +101,7 @@ blogRouter.put('/comment/:commentId',
     } catch (err) {
       return res.status(501).end('Server Error');
     }
-    return res.send(`Comment successfully edited.`);
+    return res.json(`Comment successfully edited.`);
 });
 
 blogRouter.post('/', 
@@ -116,7 +116,7 @@ blogRouter.post('/',
     } catch (err) {
       return res.status(501).end('Server Error');
     }
-    return res.send(`Post successfully created.`);
+    return res.json(`Post successfully created.`);
 });
 
 blogRouter.put('/:blogId', 
@@ -127,11 +127,11 @@ blogRouter.put('/:blogId',
     }
     // We know we have the ability to post, so edit it
     try {
-      await editPost(req.params.blogId, req.user.id, req.body.title, req.body.content);
+      await editPost(parseInt(req.params.blogId), req.user.id, req.body.title, req.body.content, req.body.published);
     } catch (err) {
       return res.status(501).end('Server Error');
     }
-    return res.send(`Post successfully edited.`);
+    return res.json(`Post successfully edited.`);
 });
 
 blogRouter.delete('/:blogId', 
@@ -146,7 +146,7 @@ blogRouter.delete('/:blogId',
     } catch (err) {
       return res.status(501).end('Server Error');
     }
-    return res.send(`Post successfully deleted.`);
+    return res.json(`Post successfully deleted.`);
 });
 
 

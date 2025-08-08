@@ -32,7 +32,7 @@ async function deletePost(id) {
     });
 }
 
-async function editPost(id, authorId, title, content) {
+async function editPost(id, authorId, title, content, published) {
     await prisma.blogPost.update({
         where: {
             id: id,
@@ -40,7 +40,8 @@ async function editPost(id, authorId, title, content) {
         data: {
             authorId: authorId,
             title: title,
-            content: content
+            content: content,
+            published: published
         },
     })
 }
