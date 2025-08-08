@@ -77,7 +77,7 @@ blogRouter.post('/:blogId/comment',
   async (req, res) => {
     // We know we have the ability to post, so go for it
     try {
-      await createComment(req.params.blogId, req.user.id, req.body.content);
+      await createComment(parseInt(req.params.blogId), req.user.id, req.body.content);
     } catch (err) {
       return res.status(501).end('Server Error');
     }
@@ -88,7 +88,7 @@ blogRouter.put('/comment/:commentId',
   passport.authenticate('jwt', { session: false }), 
   async (req, res) => {
     // Find the post owner
-    let ownerId = getCommentOwner(req.body.id);
+    let ownerId = getCommentOwner(parseInt(req.params.commentId));
     if (!ownerId) {
       return res.status(501).end('Comment not found');
     }
@@ -97,7 +97,7 @@ blogRouter.put('/comment/:commentId',
     }
     // We know we have the ability to post, so go for it
     try {
-      await editComment(req.body.id, req.body.content, req.body.published);
+      await editComment(parseInt(req.params.commentId), req.body.content, req.body.published);
     } catch (err) {
       return res.status(501).end('Server Error');
     }
@@ -142,7 +142,7 @@ blogRouter.delete('/:blogId',
     }
     // We know we have the ability to delete, so do it
     try {
-      await deletePost(req.params.blogId);
+      await deletePost(parseInt(req.params.blogId));
     } catch (err) {
       return res.status(501).end('Server Error');
     }

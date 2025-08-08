@@ -38,10 +38,39 @@ export default function BlogDetail({
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             const data = await response.json();
+            setSummary();
             console.log(data);
         } catch (err) {
-           deauthHandler();
+            setSummary()
+            deauthHandler();
             console.error('Issue with posting. logging out:', err);
+        }
+    }
+
+    async function deletePost() {
+        const confirmDelete = confirm('Are you SURE you want to delete this post? This cannot be undone.');
+        if (!confirmDelete){
+            return;
+        }
+        const url = serverPrefix + 'blog/' + String(blogId);
+        try {
+            const response =  await fetch(url, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': 'Bearer ' + token,
+                    'Content-Type': 'application/json'
+                }
+            });
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            setSummary();
+            console.log(data);
+        } catch (err) {
+            // setSummary();
+            deauthHandler();
+            console.error('Issue with deleting. logging out:', err);
         }
     }
 
@@ -105,6 +134,7 @@ export default function BlogDetail({
                 </div>
                 <button onClick={updatePost}>Update Post</button>
             </form>
+            <button onClick={deletePost}>Delete Post</button>
             <button onClick={setSummary}>Return to Summary</button>
         </div>
         

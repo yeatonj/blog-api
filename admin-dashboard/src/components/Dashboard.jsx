@@ -18,7 +18,7 @@ export default function Dashboard({
         setDisplaySummaries(true);
         setNewPost(false);
         setBlogDetailId(0);
-        deauthHandler;
+        deauthHandler();
     }
 
     if (displaySummaries) {
