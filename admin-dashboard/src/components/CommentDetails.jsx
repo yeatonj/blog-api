@@ -5,7 +5,8 @@ export default function CommentDetails({
     serverPrefix,
     token,
     deauthHandler,
-    blogId
+    commentsFlipped,
+    commentsFlippedSetter,
 }) {
 
     if (comments.length === 0) {
@@ -21,7 +22,8 @@ export default function CommentDetails({
                 serverPrefix={serverPrefix}
                 token={token}
                 deauthHandler={deauthHandler}
-                blogId={blogId}
+                commentsFlipped={commentsFlipped}
+                commentsFlippedSetter={commentsFlippedSetter}
             />
         </li>
     )

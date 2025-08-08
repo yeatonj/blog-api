@@ -3,6 +3,8 @@ export default function Comment({
     serverPrefix,
     token,
     deauthHandler,
+    commentsFlipped,
+    commentsFlippedSetter,
 }) {
 
     function unpublish() {
@@ -25,6 +27,7 @@ export default function Comment({
                 }
                 const data = await response.json();
                 console.log(data);
+                commentsFlippedSetter(commentsFlipped + 1);
             } catch (err) {
                 deauthHandler();
                 console.error('Issue with posting. logging out:', err);
@@ -53,6 +56,7 @@ export default function Comment({
                 }
                 const data = await response.json();
                 console.log(data);
+                commentsFlippedSetter(commentsFlipped + 1);
             } catch (err) {
                 deauthHandler();
                 console.error('Issue with posting. logging out:', err);

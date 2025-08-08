@@ -24,6 +24,7 @@ export default function BlogDetail({
     const [postBody, setPostBody] = useState(null);
     const [postTitle, setPostTitle] = useState(null);
     const [isPublished, setIsPublished] = useState(null);
+    const [commentsFlipped, setCommentsFlipped] = useState(0);
 
     async function updatePost(event) {
         event.preventDefault();
@@ -110,7 +111,7 @@ export default function BlogDetail({
             active = false;
         }
 
-    }, [deauthHandler, token, serverPrefix, blogId]);
+    }, [deauthHandler, token, serverPrefix, blogId, commentsFlipped]);
 
     if (postDetails === null) {
         return (
@@ -154,7 +155,8 @@ export default function BlogDetail({
                 serverPrefix={serverPrefix}
                 token={token}
                 deauthHandler={deauth}
-                blogId={blogId}
+                commentsFlipped={commentsFlipped}
+                commentsFlippedSetter={setCommentsFlipped}
             />
             <button onClick={setSummary}>Return to Summary</button>
         </div>
