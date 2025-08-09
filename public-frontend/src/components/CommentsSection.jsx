@@ -13,10 +13,9 @@ export default function CommentsSection({
         )
     }
 
-    console.log(comments)
     const postComments = comments.map(comment => {
         return (
-            <li>
+            <li key={comment.id}>
                 <Comment 
                     details={comment}
                 />

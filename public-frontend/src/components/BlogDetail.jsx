@@ -10,6 +10,7 @@ export default function BlogDetail({
     blogId
 }) {
     const [postDetails, setPostDetails] = useState(null);
+    const [commentsMade, setCommentsMade] = useState(0);
     
     // Grab the blog data to display
     useEffect(() => {
@@ -39,9 +40,7 @@ export default function BlogDetail({
             active = false;
         }
 
-    }, [deauthHandler, token, serverPrefix, blogId]);
-
-    console.log(postDetails);
+    }, [deauthHandler, token, serverPrefix, blogId, commentsMade]);
 
     if (postDetails === null) {
         return (
@@ -56,6 +55,8 @@ export default function BlogDetail({
             token={token}
             deauthHandler={deauthHandler}
             blogId={blogId}
+            commentsMade={commentsMade}
+            commentsMadeSetter={setCommentsMade}
         />
     }
 
