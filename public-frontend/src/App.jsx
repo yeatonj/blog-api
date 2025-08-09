@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './App.css'
 import LoggedInBanner from './components/LoggedInBanner';
-import LogoutButton from '../../admin-dashboard/src/components/LogoutButton';
+import LogoutButton from './components/LogoutButton';
 import LoginForm from './components/LoginForm';
 import AppContent from './components/AppContent';
 
@@ -18,10 +18,19 @@ function App() {
 
   const [loginMessage, setLoginMessage] = useState('');
 
-  function deauthenticate() {
+  function expireLogin() {
     setToken(null);
     setLoggedIn(false);
     setLoginMessage('Credentials expired, please log in again!');
+    localStorage.removeItem('loggedIn');
+    localStorage.removeItem('admin');
+    localStorage.removeItem('token');
+  }
+
+  function logout() {
+    setToken(null);
+    setLoggedIn(false);
+    setLoginMessage('');
     localStorage.removeItem('loggedIn');
     localStorage.removeItem('admin');
     localStorage.removeItem('token');
@@ -38,7 +47,9 @@ function App() {
     />;
   } else {
     loginHeader = <LoggedInBanner />;
-    logoutFooter = <LogoutButton />;
+    logoutFooter = <LogoutButton 
+      logoutFunction={logout}
+    />;
   }
 
   return (
