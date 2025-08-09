@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import NewComment from "./NewComment";
+import CommentsSection from "./CommentsSection";
 
 export default function BlogDetail({
     serverPrefix,
@@ -41,11 +43,32 @@ export default function BlogDetail({
 
     console.log(postDetails);
 
+    if (postDetails === null) {
+        return (
+            <p>Loading Post...</p>
+        )
+    }
+
+    let newComment = <p>Please log in in order to post comments!</p>;
+    if (token !== null) {
+        newComment = <NewComment 
+            serverPrefix={serverPrefix}
+            token={token}
+            deauthHandler={deauthHandler}
+            blogId={blogId}
+        />
+    }
+
 
     return (
         <>
-            <p>This will be the details of a specific blog post.</p>
-            <button onClick={resetHandler}>Back to Summary</button>
+            <h1>{postDetails.title}</h1>
+            <p>{postDetails.content}</p>
+            <button onClick={resetHandler}>Back to Index</button>
+            {newComment}
+            <CommentsSection 
+                comments={postDetails.comments}
+            />
         </>
     )
 }

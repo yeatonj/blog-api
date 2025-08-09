@@ -1,7 +1,35 @@
-export default function CommentsSection() {
+import Comment from "./Comment"
+
+export default function CommentsSection({
+    comments
+}) {
+
+    if (comments.length === 0) {
+        return (
+            <>
+                <h3>Comments:</h3>
+                <p>There are no comments yet. You could be the first!</p>
+            </>
+        )
+    }
+
+    console.log(comments)
+    const postComments = comments.map(comment => {
+        return (
+            <li>
+                <Comment 
+                    details={comment}
+                />
+            </li>
+        )
+    })
 
 
     return (
-        <p>This will be a comments section</p>
+        <>
+            <h3>Comments:</h3>
+            <ul>{postComments}</ul>
+        </>
+        
     )
 }

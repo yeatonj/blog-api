@@ -1,4 +1,9 @@
-export default function NewComment() {
+export default function NewComment({
+    serverPrefix,
+    token,
+    deauthHandler,
+    blogId
+}) {
 
 
     return (
