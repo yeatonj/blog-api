@@ -55,7 +55,10 @@ function App() {
   return (
     <>
       {loginHeader}
-      <AppContent />
+      <AppContent 
+        token={token}
+        deauthHandler={expireLogin}
+      />
       {logoutFooter}
     </>
   )
