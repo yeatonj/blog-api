@@ -15,7 +15,7 @@ export default function AllBlogs({
         let active = true;
         const fetchPosts = async () => {
                 try {
-                const response =  await fetch(serverPrefix + 'blog/all', {
+                const response =  await fetch(serverPrefix + 'blog', {
                     method: 'GET',
                     headers: {
                         'Authorization': 'Bearer ' + token,
