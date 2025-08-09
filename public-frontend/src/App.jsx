@@ -16,9 +16,12 @@ function App() {
     return initialLoggedIn ? initialLoggedIn : false;
   });
 
+  const [loginMessage, setLoginMessage] = useState('');
+
   function deauthenticate() {
     setToken(null);
     setLoggedIn(false);
+    setLoginMessage('Credentials expired, please log in again!');
     localStorage.removeItem('loggedIn');
     localStorage.removeItem('admin');
     localStorage.removeItem('token');
@@ -27,7 +30,12 @@ function App() {
   let loginHeader;
   let logoutFooter = <></>;
   if (!loggedIn) {
-    loginHeader = <LoginForm />;
+    loginHeader = <LoginForm 
+          tokenSetter={setToken}
+          loggedInSetter={setLoggedIn}
+          loginMessage={loginMessage}
+          loginMessageSetter={setLoginMessage}
+    />;
   } else {
     loginHeader = <LoggedInBanner />;
     logoutFooter = <LogoutButton />;
