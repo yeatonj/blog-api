@@ -54,7 +54,7 @@ export default function LoginForm({
 
     return (
         <>
-            <h3>Log In</h3>
+            <h3>Please log in if you would like to comment on posts.</h3>
             {message}
             <form onSubmit={login}>
                 <label>Username</label>
