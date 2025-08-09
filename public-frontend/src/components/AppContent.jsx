@@ -1,5 +1,6 @@
 import { useState } from "react"
 import AllBlogs from "./AllBlogs";
+import BlogDetail from "./BlogDetail";
 
 export default function AppContent({
     token,
@@ -12,6 +13,10 @@ export default function AppContent({
 
     let content;
 
+    function resetDetail() {
+        setDetailView(false);
+    }
+
     if (!detailView) {
         content = <AllBlogs 
             serverPrefix={serverPrefix}
@@ -21,7 +26,13 @@ export default function AppContent({
             detailIdSetter={setDetailId}
         />
     } else {
-        content= <p>Viewing the details!</p>
+        content = <BlogDetail 
+            serverPrefix={serverPrefix}
+            token={token}
+            deauthHandler={deauthHandler}
+            resetHandler={resetDetail}
+            blogId={detailId}
+        />
     }
 
     return (
