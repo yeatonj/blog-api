@@ -7,6 +7,7 @@ const { getAllPosts,
   deletePost,
   editPost,
   getPost,
+  getPostNonAdmin,
   createComment,
   getCommentOwner,
   editComment 
@@ -43,7 +44,7 @@ blogRouter.get('/:blogId',
   async (req, res) => {
     let post;
     try {
-      post = await getPost(parseInt(req.params.blogId));
+      post = await getPostNonAdmin(parseInt(req.params.blogId));
       // Check if published. If not, post not found.
       if (!post.published) {
         return res.status(501).end('Post not found');

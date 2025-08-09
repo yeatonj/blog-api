@@ -58,6 +58,23 @@ async function getPost(id) {
     return post;
 }
 
+async function getPostNonAdmin(id) {
+    const post = await prisma.blogPost.findFirst({
+        where: {
+            id: id,
+            published: true
+        },
+        include: {
+            comments: {
+                where: {
+                    published: true
+                }
+            }
+        }
+    });
+    return post;
+}
+
 async function createComment(blogId, userId, content) {
     await prisma.comment.create({
         data: {
@@ -100,6 +117,7 @@ module.exports = {
     deletePost,
     editPost,
     getPost,
+    getPostNonAdmin,
     createComment,
     getCommentOwner,
     editComment
